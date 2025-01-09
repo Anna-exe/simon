@@ -1,6 +1,7 @@
 /**
  * @jest-environment jsdom
  */
+const { describe } = require("yargs");
 const { game, newGame } = require("../game");
 
 beforeAll(() => {
@@ -36,9 +37,20 @@ describe("game object containts correct keys", () => {
 describe("newGame works correctly", ()=> {
     beforeAll(() => {
         game.score = 42;
+        game.playerMoves = ["button1", "button2"];
+        game.currentGame = ["button1", "button2"];
+        document.getElementById("score").innerText = "42";
         newGame();
     });
     test("should set game score to zero", () => {
-        expect(game.score).toEqual(0);
+        expect(game.score).toBe(0);
+    });
+
+    test("should clear the computer sequence array", () => {
+        expect(game.currentGame.length).toBe(0);
+    })
+
+    test("should clear the player moves array", () => {
+        expect(game.playerMoves.length).toBe(0);
     });
 })
